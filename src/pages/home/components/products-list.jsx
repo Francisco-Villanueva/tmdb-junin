@@ -4,8 +4,10 @@ import { CgDetailsMore } from "react-icons/cg";
 import { FaCartPlus } from "react-icons/fa";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { useProducts } from "../../../hooks";
 
-export function ProductList({ products = [] }) {
+export function ProductList() {
+  const { products } = useProducts();
   const userLogged = useSelector((state) => state.user.userLogged);
   const nav = useNavigate();
 
