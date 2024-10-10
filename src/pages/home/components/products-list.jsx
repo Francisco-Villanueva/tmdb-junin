@@ -1,55 +1,49 @@
-import { message } from "antd";
-import React from "react";
-import { CgDetailsMore } from "react-icons/cg";
-import { FaCartPlus } from "react-icons/fa";
-import { useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { useSearchParams } from "react-router-dom";
 import { useProducts } from "../../../hooks";
+import { getProductSearched } from "../services";
+import { ProductCard } from "./product-card";
+import { ProductFilters } from "./product-filter";
 
 export function ProductList() {
+  const [searchedProducts, setSearchedProducts] = useState([]);
+  const [searching, setSearching] = useState(false);
+  const [searchParams] = useSearchParams();
+  const searchQuery = searchParams.get("q");
   const { products } = useProducts();
-  const userLogged = useSelector((state) => state.user.userLogged);
-  const nav = useNavigate();
 
-  const handleAddToCart = () => {
-    if (!(userLogged && userLogged.name)) {
-      return nav("/login");
-    }
-    message.success("producto agregado al carrito!");
-  };
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        setSearching(true);
+        const res = await getProductSearched(searchQuery);
+        setSearchedProducts(res.data.products);
+      } catch (error) {
+        console.log(error);
+      } finally {
+        setSearching(false);
+      }
+    };
+
+    fetchData();
+  }, [searchQuery, products]);
+
+  const list = searchQuery ? searchedProducts : products;
+
   return (
-    <div className="flex flex-wrap gap-2 max-h-[100%] h-full overflow-auto p-4  ">
-      {products.map((product) => (
-        <div
-          key={product.id}
-          className="flex flex-col  w-[200px] flex-grow  gap-3  bg-slate-50 rounded cursor-pointer hover:bg-slate-200 transition-all duration-150  "
-        >
-          <img src={product.thumbnail} className="w-3/4 mx-auto" />
-
-          <div className="p-2 flex flex-col gap-2 items-start    flex-grow ">
-            <p className="font-semibold text-sky-600 flex-grow  ">
-              {product.title}
-            </p>
-            <div className="w-full space-y-2">
-              <div className="flex justify-between w-full items-center bg-white rounded-md p-2">
-                <p className=" text-sky-700 font-semibold">$ {product.price}</p>
-                <span className="px-3  rounded-md bg-sky-400 text-xs font-semibold text-white ">
-                  {" "}
-                  {product.category}
-                </span>
-              </div>
-              <div className="flex items-center gap-2 text-lg text-gray-800">
-                <button onClick={handleAddToCart}>
-                  <FaCartPlus />
-                </button>
-                <button onClick={() => nav(`/home/products/${product.id}`)}>
-                  <CgDetailsMore />
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-      ))}
-    </div>
+    <section className="h-full space-y-6 flex flex-col gap-4 p-4 ">
+      <ProductFilters />
+      <div className="grid grid-cols-5  max-md:grid-cols-2  gap-4 max-h-full h-full overflow-auto  ">
+        {searching ? (
+          <>Loading...</>
+        ) : list.length === 0 ? (
+          <>NO data</>
+        ) : (
+          list.map((product) => (
+            <ProductCard product={product} key={product.id} />
+          ))
+        )}
+      </div>
+    </section>
   );
 }

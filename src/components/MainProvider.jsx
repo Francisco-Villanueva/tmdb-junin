@@ -20,7 +20,7 @@ export function MainProvider({ children }) {
   }, []);
   useEffect(() => {
     // Tengo que hacer un efecto para solicitar la info.
-    //creo la function para hacer el 'fetch' de la informacion. Recordemos, es una funcion async. usp trycatch
+    // creo la function para hacer el 'fetch' de la informacion. Recordemos, es una funcion async. usp trycatch
 
     const fetchData = async () => {
       try {
@@ -39,6 +39,5 @@ export function MainProvider({ children }) {
     fetchData();
   }, []);
 
-  console.log("CORRE MAIN PROVIDEER!");
-  return <div>{children}</div>;
+  return <>{children}</>;
 }

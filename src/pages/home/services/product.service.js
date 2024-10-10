@@ -11,3 +11,13 @@ export const getAllProducts = async ()=>{
 export const getProductById = async (id)=>{
     return await axios.get(`${API_URL}/products/${id}`);
 }
+
+// Funcion para obtener el detalle de un producto por ID.
+export const getProductSearched = async (searchValue)=>{
+    return await axios.get(`${API_URL}/products/search?search=${searchValue}`);
+}
+
+// Funcion para obtener el detalle de un producto por ID.
+export const getCategories = async ()=>{
+    return await axios.get(`${API_URL}/products/category-list`);
+}

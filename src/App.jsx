@@ -6,7 +6,6 @@ import {
   RegisterPage,
   LoginPage,
   ProductPage,
-  ProductDetailPage,
   UserPage,
   NotFoundPage,
 } from "./pages";
