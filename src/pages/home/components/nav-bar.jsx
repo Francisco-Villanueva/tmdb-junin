@@ -4,6 +4,7 @@ import { FaCartShopping } from "react-icons/fa6";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { clearUserLoggedData } from "../../../store/userSlice";
+import { SearchProduct } from "./serach-product";
 
 export function Navbar() {
   const userLogged = useSelector((state) => state.user.userLogged);
@@ -27,14 +28,7 @@ export function Navbar() {
       </div>
 
       <section className="flex items-center gap-4">
-        <div className="flex items-center relative bg-slate-100 text-gray-600 rounded-md p-2  w-64">
-          <FaSearch className="absolute right-2" />
-          <input
-            type="text"
-            className="bg-transparent  rounded-md pr-8 pl-2 py-1 outline-none text-sm w-full"
-            placeholder="What are you looking for?"
-          />
-        </div>
+        <SearchProduct />
         {userLogged && userLogged.name ? (
           <div className="text-sm flex gap-4 h-full">
             <button>

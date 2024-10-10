@@ -6,24 +6,26 @@ import {
   RegisterPage,
   LoginPage,
   ProductPage,
-  ProductDetailPage,
   UserPage,
   NotFoundPage,
 } from "./pages";
+import { MainProvider } from "./components";
 
 function App() {
   return (
-    <main className="bg-[#f1f1f1]  ">
-      <Routes>
-        <Route path="/" element={<LandingPage />} />
-        <Route path="/home/*" element={<HomePage />} />
-        <Route path="/login" element={<LoginPage />} />
-        <Route path="/register" element={<RegisterPage />} />
-        <Route path="/products" element={<ProductPage />} />
+    <main className="bg-[#f1f1f1] min-h-screen  ">
+      <MainProvider>
+        <Routes>
+          <Route path="/" element={<LandingPage />} />
+          <Route path="/home/*" element={<HomePage />} />
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="/register" element={<RegisterPage />} />
+          <Route path="/products" element={<ProductPage />} />
 
-        <Route path="/users" element={<UserPage />} />
-        <Route path="*" element={<NotFoundPage />} />
-      </Routes>
+          <Route path="/users" element={<UserPage />} />
+          <Route path="*" element={<NotFoundPage />} />
+        </Routes>
+      </MainProvider>
     </main>
   );
 }
