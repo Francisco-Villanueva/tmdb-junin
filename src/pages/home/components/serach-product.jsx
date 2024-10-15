@@ -3,20 +3,12 @@ import { FaSearch } from "react-icons/fa";
 import { useLocation, useNavigate, useSearchParams } from "react-router-dom";
 
 export function SearchProduct() {
-  const [searchParams] = useSearchParams();
-  const navigate = useNavigate();
-  const { pathname } = useLocation();
-  const [searchQuery, setSearchQuery] = useState(searchParams.get("q") || "");
+  const [searchQuery, setSearchQuery] = useState("");
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    if (searchQuery) {
-      searchParams.set("search", searchQuery);
-    } else {
-      searchParams.delete("search");
-    }
 
-    navigate(`${pathname}?${searchParams.toString()}`);
+    console.log("Valor para buscar: ", searchQuery);
   };
 
   return (
