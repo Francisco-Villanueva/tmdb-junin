@@ -1,6 +1,6 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { setProducts } from "../store/productSlice";
+import { setLoading, setProducts } from "../store/productSlice";
 export function useProducts() {
   const state = useSelector((s) => s.products);
   const dispatch = useDispatch();
@@ -8,5 +8,9 @@ export function useProducts() {
   const setProductStore = (productList) => {
     dispatch(setProducts(productList));
   };
-  return { ...state, setProductStore };
+
+  const setLoadingProducts = (value) => {
+    dispatch(setLoading(value));
+  };
+  return { ...state, setProductStore, setLoadingProducts };
 }

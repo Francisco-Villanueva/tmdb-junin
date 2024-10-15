@@ -6,7 +6,7 @@ import { getUserLogged } from "../services";
 import { getAllProducts } from "../pages/home/services";
 
 export function MainProvider({ children }) {
-  const { setProductStore } = useProducts();
+  const { setProductStore, setLoadingProducts } = useProducts();
   const dispatch = useDispatch();
   const accessToken = localStorage.getItem("accessToken");
   useEffect(() => {
@@ -23,6 +23,7 @@ export function MainProvider({ children }) {
     // creo la function para hacer el 'fetch' de la informacion. Recordemos, es una funcion async. usp trycatch
 
     const fetchData = async () => {
+      setLoadingProducts(true);
       try {
         const res = await getAllProducts(); // =  await axios.get('https://dummyjson.com/products')
         // console.log("Product response:  ", res); // antes de hacer algo, veo la respuesta en consola.
@@ -33,6 +34,8 @@ export function MainProvider({ children }) {
         setProductStore(productList);
       } catch (error) {
         console.error("Error en la api", error);
+      } finally {
+        setLoadingProducts(false);
       }
     };
 

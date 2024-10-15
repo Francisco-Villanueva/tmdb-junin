@@ -3,6 +3,7 @@ import { createSlice } from '@reduxjs/toolkit'
 const initialState = {
   immutableProducts: [],
   products: [],
+  loading: false
 };
 
 export const productSlice = createSlice({
@@ -12,6 +13,9 @@ export const productSlice = createSlice({
     setProducts: (state, action) => {
       state.products = action.payload
       state.immutableProducts = action.payload
+    },
+    setLoading: (state, action) => {
+      state.loading = action.payload
     },
     addProduct: (state, action) => {
       state.products.push(action.payload)
@@ -26,6 +30,6 @@ export const productSlice = createSlice({
 })
 
 // Action creators are generated for each case reducer function
-export const { addProduct,removeProduct,setProducts } = productSlice.actions
+export const { addProduct,removeProduct,setProducts, setLoading } = productSlice.actions
 
 export default productSlice.reducer
