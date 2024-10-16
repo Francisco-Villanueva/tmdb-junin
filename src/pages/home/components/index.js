@@ -1,3 +1,4 @@
+export * from './aside'
 export * from './nav-bar'
 export * from './products-list'
 export * from './product-card'

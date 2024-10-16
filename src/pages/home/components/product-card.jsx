@@ -1,18 +1,31 @@
 import { message } from "antd";
 import { CgDetailsMore } from "react-icons/cg";
-import { FaCartPlus } from "react-icons/fa";
+
+import { TbShoppingCartOff, TbShoppingCartPlus } from "react-icons/tb";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { useProducts } from "../../../hooks/useProducts";
 
 export function ProductCard({ product }) {
+  const { handleAddToCart, handleRemoveFromCart, cart } = useProducts();
+
   const nav = useNavigate();
   const userLogged = useSelector((state) => state.user.userLogged);
 
-  const handleAddToCart = () => {
+  const isOnCart = cart.products.some((p) => p.id === product.id);
+  const handleCart = () => {
     if (!(userLogged && userLogged.name)) {
       return nav("/login");
     }
-    message.success("producto agregado al carrito!");
+
+    if (isOnCart) {
+      message.info("Producto removido del carrito!");
+      handleRemoveFromCart(product.id);
+      return;
+    } else {
+      handleAddToCart(product);
+      message.success("Producto agregado al carrito!");
+    }
   };
   return (
     <div className="flex flex-col w-full max-h-[300px]   gap-3  bg-slate-50 rounded  hover:bg-slate-100 transition-all duration-150  ">
@@ -30,9 +43,13 @@ export function ProductCard({ product }) {
               {product.category}
             </span>
           </div>
-          <div className="flex items-center gap-2 text-3xl text-gray-800">
-            <button onClick={handleAddToCart}>
-              <FaCartPlus />
+          <div className="flex items-center gap-2 text-2xl ">
+            <button onClick={handleCart}>
+              {isOnCart ? (
+                <TbShoppingCartOff className="text-gray-500" />
+              ) : (
+                <TbShoppingCartPlus className="text-gray-800" />
+              )}
             </button>
             <button onClick={() => nav(`/home/products/${product.id}`)}>
               <CgDetailsMore />

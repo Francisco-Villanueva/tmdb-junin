@@ -11,6 +11,10 @@ export function SearchProduct() {
     console.log("Valor para buscar: ", searchQuery);
   };
 
+  const handleInputChange = (value) => {
+    setSearchQuery(value);
+  };
+
   return (
     <form
       className="flex items-center relative bg-slate-100 text-gray-600 rounded-md p-2  w-64"
@@ -22,7 +26,7 @@ export function SearchProduct() {
         className="bg-transparent  rounded-md pr-8 pl-2 py-1 outline-none text-sm w-full"
         placeholder="What are you looking for?"
         value={searchQuery}
-        onChange={(event) => setSearchQuery(event.target.value)}
+        onChange={(event) => handleInputChange(event.target.value)}
       />
     </form>
   );
