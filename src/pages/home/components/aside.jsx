@@ -9,9 +9,6 @@ export function Aside({ asideStatus, setAsideStatus, children }) {
         }`}
       ></div>
       <aside
-        // className={`bg-white w-[30vw] max-md:w-full py-6 h-full absolute right-0  transform transition-all duration-300 ${
-        //   asideStatus ? "translate-x-0" : "translate-x-[100%]"
-        // }`}
         className={`flex flex-col gap-2 fixed top-0 right-0 h-full w-[30%] min-w-[600px] shadow-md shadow-gray-400 p-4 py-6 bg-white z-30 transform transition-transform duration-300 ${
           asideStatus ? "translate-x-0" : "translate-x-full"
         } `}
